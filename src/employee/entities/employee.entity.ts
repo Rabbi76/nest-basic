@@ -1,35 +1,30 @@
-import { EmployeePosition } from "src/employee-position/entities/employee-position.entity";
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, JoinColumn, OneToOne, JoinTable, ManyToMany, OneToMany, ManyToOne } from "typeorm";
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  Tree,
+  TreeChildren,
+  TreeParent,
+} from 'typeorm';
 
 @Entity('employee')
+@Tree('closure-table')
 export class Employee {
-    @PrimaryGeneratedColumn()
-    id: number;
-  
-    @Column({ length: 500 })
-    name: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @OneToOne(() => EmployeePosition)
-    @JoinColumn()
-    position: EmployeePosition
+  @Column({ length: 500 })
+  name: string;
 
-    @ManyToOne((type) => Employee, (category) => category.child)
-    parent?: Employee
+  @Column({ nullable: true })
+  positionId: number;
 
-    @OneToMany((type) => Employee, (category) => category.parent)
-    child?: Employee[]
-  
-  
-    @CreateDateColumn({
-      type: 'timestamp',
-      default: () => 'CURRENT_TIMESTAMP(6)',
-    })
-    created_at: Date;
-  
-    @UpdateDateColumn({
-      type: 'timestamp',
-      default: () => 'CURRENT_TIMESTAMP(6)',
-      onUpdate: 'CURRENT_TIMESTAMP(6)',
-    })
-    updated_at: Date;
+  @Column({ length: 100, nullable: true })
+  positionName: string;
+
+  @TreeChildren()
+  child: Employee[];
+
+  @TreeParent()
+  parent: Employee;
 }

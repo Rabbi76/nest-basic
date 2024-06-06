@@ -6,14 +6,13 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  
+
   const config = new DocumentBuilder()
-  .addBearerAuth()
-  .setTitle('WSD')
-  .setDescription('The WSD API description')
-  .setVersion('1.0')
-  .addTag('WSD')
-  .build();
+    .addBearerAuth()
+    .setTitle('NEST JS - Rabbi')
+    .setDescription('The NEST API description')
+    .setVersion('1.0')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
