@@ -22,13 +22,13 @@ import { Public } from 'src/auth/decorators/public.decorator';
 @Controller('employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
-  
+
   @Public()
   @Get('emp-information-public/:id')
   empInfoPublic(@Param('id') id: string) {
     return this.employeeService.empInfo(+id);
   }
-  
+
   @UseGuards(AuthGuard)
   @UseGuards(RolesGuard)
   @Roles(UserRoles.Admin, UserRoles.Staff)
