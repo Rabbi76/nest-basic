@@ -75,8 +75,6 @@ export class EmployeeController {
     return this.employeeService.update(+id, updateEmployeeDto);
   }
 
-
-  @Roles(UserRoles.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.employeeService.remove(+id);
