@@ -27,6 +27,7 @@ export class EmployeeService {
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    console.log(id, updateEmployeeDto)
     await this.employeeRepository.update(id, updateEmployeeDto);
     return await this.getEmpPositionInfo(id, true);
   }
