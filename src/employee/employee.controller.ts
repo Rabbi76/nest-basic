@@ -37,7 +37,6 @@ export class EmployeeInfoController {
   empInfo(@Param('id') id: string) {
     return this.employeeService.empInfo(+id);
   }
-
 }
 
 @UseGuards(AuthGuard)
@@ -54,18 +53,15 @@ export class EmployeeController {
     return this.employeeService.create(createEmployeeDto);
   }
 
-
   @Get()
   findAll() {
     return this.employeeService.findAll();
   }
 
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.employeeService.findOne(+id);
   }
-
 
   @Patch(':id')
   update(
@@ -80,4 +76,3 @@ export class EmployeeController {
     return this.employeeService.remove(+id);
   }
 }
-

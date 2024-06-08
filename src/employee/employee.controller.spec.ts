@@ -1,5 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EmployeeController, EmployeeInfoController } from './employee.controller';
+import {
+  EmployeeController,
+  EmployeeInfoController,
+} from './employee.controller';
 import { EmployeeService } from './employee.service';
 import { Employee } from './entities/employee.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -23,38 +26,37 @@ const dummyEmp = {
 } as Employee;
 
 const createEmp = {
-  "name": "name 1",
-  "positionId": 1,
-  "positionName": "CTO",
+  name: 'name 1',
+  positionId: 1,
+  positionName: 'CTO',
 } as CreateEmployeeDto;
 
-
 const UpdateEmp = {
-  "name": "name 1",
-  "positionId": 1,
-  "positionName": "CTO",
+  name: 'name 1',
+  positionId: 1,
+  positionName: 'CTO',
 } as UpdateEmployeeDto;
 
 const id = '1';
 
 const employees = [dummyEmp];
 
-const dummyEmpInfo= [
+const dummyEmpInfo = [
   {
-    "id": 3,
-    "name": "name 3",
-    "positionId": 3,
-    "positionName": "Software eng",
-    "child": [
+    id: 3,
+    name: 'name 3',
+    positionId: 3,
+    positionName: 'Software eng',
+    child: [
       {
-        "id": 4,
-        "name": "name 4",
-        "positionId": 4,
-        "positionName": "Junior software eng",
-        "child": []
-      }
-    ]
-  }
+        id: 4,
+        name: 'name 4',
+        positionId: 4,
+        positionName: 'Junior software eng',
+        child: [],
+      },
+    ],
+  },
 ];
 
 const mockGuard = {
@@ -76,12 +78,14 @@ describe('EmployeeController', () => {
         },
       ],
     })
-    .overrideGuard(AuthGuard)
-    .useValue(mockGuard)
-    .compile();
+      .overrideGuard(AuthGuard)
+      .useValue(mockGuard)
+      .compile();
 
     controller = module.get<EmployeeController>(EmployeeController);
-    controllerEmpInfo = module.get<EmployeeInfoController>(EmployeeInfoController);
+    controllerEmpInfo = module.get<EmployeeInfoController>(
+      EmployeeInfoController,
+    );
   });
 
   it('should be defined', () => {
@@ -116,10 +120,10 @@ describe('EmployeeController', () => {
 
     //act
     const result = await controller.findOne(id);
-    
+
     expect(mockEmpService.findOne).toHaveBeenCalled();
     expect(mockEmpService.findOne).toHaveBeenCalledWith(+id);
-    
+
     expect(result).toEqual(dummyEmp);
   });
 
@@ -142,7 +146,7 @@ describe('EmployeeController', () => {
 
     expect(mockEmpService.remove).toHaveBeenCalled();
     expect(mockEmpService.remove).toHaveBeenCalledWith(+id);
-    
+
     expect(result).toEqual(dummyEmp);
   });
 
@@ -150,7 +154,7 @@ describe('EmployeeController', () => {
     jest.spyOn(mockEmpService, 'empInfo').mockReturnValue(dummyEmpInfo);
 
     const result = await controllerEmpInfo.empInfoPublic(id);
-    
+
     expect(result).toEqual(dummyEmpInfo);
   });
 
@@ -159,8 +163,7 @@ describe('EmployeeController', () => {
 
     //act
     const result = await controllerEmpInfo.empInfo(id);
-    
+
     expect(result).toEqual(dummyEmpInfo);
   });
-
 });

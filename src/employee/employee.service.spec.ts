@@ -20,35 +20,35 @@ const dummyEmp = {
 } as Employee;
 
 const createEmp = {
-  "name": "name 1",
-  "positionId": 0,
-  "positionName": "CTO",
+  name: 'name 1',
+  positionId: 0,
+  positionName: 'CTO',
 } as CreateEmployeeDto;
 
 const id = 1;
 
 const employees = [dummyEmp];
 
-const dummyEmpInfo= [
+const dummyEmpInfo = [
   {
-    "id": 3,
-    "name": "name 3",
-    "positionId": 3,
-    "positionName": "Software eng",
-    "child": [
+    id: 3,
+    name: 'name 3',
+    positionId: 3,
+    positionName: 'Software eng',
+    child: [
       {
-        "id": 4,
-        "name": "name 4",
-        "positionId": 4,
-        "positionName": "Junior software eng",
-        "child": []
-      }
-    ]
-  }
+        id: 4,
+        name: 'name 4',
+        positionId: 4,
+        positionName: 'Junior software eng',
+        child: [],
+      },
+    ],
+  },
 ];
 describe('EmployeeService', () => {
   let service: EmployeeService;
-  beforeEach(() => jest.resetAllMocks())
+  beforeEach(() => jest.resetAllMocks());
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -67,7 +67,6 @@ describe('EmployeeService', () => {
     expect(service).toBeDefined();
   });
 
-
   it('create => Should create a new Employee and return its data', async () => {
     jest.spyOn(mockEmpRepository, 'save').mockReturnValue(dummyEmp);
 
@@ -82,7 +81,6 @@ describe('EmployeeService', () => {
   it('findAll => Should return an array of employee', async () => {
     //arrange
 
-   
     jest.spyOn(mockEmpRepository, 'find').mockReturnValue(employees);
 
     const result = await service.findAll();
@@ -95,34 +93,29 @@ describe('EmployeeService', () => {
   it('findOne => Should find a employee by a given id and return its data', async () => {
     jest.spyOn(mockEmpRepository, 'findOne').mockReturnValue(dummyEmp);
 
-
     const result = await service.findOne(id);
 
     expect(mockEmpRepository.findOne).toHaveBeenCalled();
-    
+
     expect(result).toEqual(dummyEmp);
   });
 
   it('remove => Should find a employee by a given id, remove and then return Number of affected rows', async () => {
     jest.spyOn(mockEmpRepository, 'delete').mockReturnValue(dummyEmp);
 
-
     const result = await service.remove(id);
 
     expect(mockEmpRepository.delete).toHaveBeenCalled();
     expect(mockEmpRepository.delete).toHaveBeenCalledWith(id);
-    
+
     expect(result).toEqual(dummyEmp);
   });
 
-  
   it('empInfo => Should find a employee and all children by a given id and then return all the Employee Information (hierarchy by position) under any given position', async () => {
     jest.spyOn(mockEmpRepository, 'getEmpInfo').mockResolvedValue(dummyEmpInfo);
-
 
     const result = await service.empInfo(id);
 
     expect(result).toEqual([]);
   });
-
 });

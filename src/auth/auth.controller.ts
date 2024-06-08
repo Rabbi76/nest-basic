@@ -4,7 +4,6 @@ import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {

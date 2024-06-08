@@ -60,12 +60,11 @@ export class EmployeeService {
   async empInfo(id: number) {
     const emp = await this.getEmpPositionInfo(id, false);
 
-    if(emp?.id){
+    if (emp?.id) {
       const data = await this.employeeTreeRepository.findDescendantsTree(emp);
       return data?.child;
     } else {
       return [];
     }
-    
   }
 }
