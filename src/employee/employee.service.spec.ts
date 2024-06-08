@@ -48,8 +48,8 @@ const dummyEmpInfo = [
 ];
 describe('EmployeeService', () => {
   let service: EmployeeService;
-  beforeEach(() => jest.resetAllMocks());
   beforeEach(async () => {
+    jest.resetAllMocks();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EmployeeService,
@@ -112,7 +112,7 @@ describe('EmployeeService', () => {
   });
 
   it('empInfo => Should find a employee and all children by a given id and then return all the Employee Information (hierarchy by position) under any given position', async () => {
-    jest.spyOn(mockEmpRepository, 'getEmpInfo').mockResolvedValue(dummyEmpInfo);
+    jest.spyOn(mockEmpRepository, 'getEmpInfo').mockReturnValue(dummyEmpInfo);
 
     const result = await service.empInfo(id);
 
