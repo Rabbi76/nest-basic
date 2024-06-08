@@ -7,7 +7,7 @@ import {
   IsEnum,
   Length,
 } from 'class-validator';
-import { UserRoles } from 'src/auth/decorators/role.enum';
+import { UserRoles } from '../../auth/decorators/role.enum';
 
 export class CreateUserDto {
   @ApiProperty({

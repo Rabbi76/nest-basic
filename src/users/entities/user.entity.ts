@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { UserRoles } from 'src/auth/decorators/role.enum';
+import { UserRoles } from '../../auth/decorators/role.enum';
 import {
   Entity,
   PrimaryGeneratedColumn,
