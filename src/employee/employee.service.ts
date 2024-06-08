@@ -12,7 +12,6 @@ export class EmployeeService {
     private employeeRepository: Repository<Employee>,
     @InjectRepository(Employee)
     private employeeTreeRepository: TreeRepository<Employee>,
-    @InjectDataSource() private readonly dataSource: DataSource,
   ) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
@@ -39,7 +38,7 @@ export class EmployeeService {
   async getEmpPositionInfo(
     id: number,
     rel: boolean = false,
-  ): Promise<Employee> {
+  ): Promise<Employee | any> {
     let relation = [];
     if (rel) {
       relation = ['child'];
@@ -51,20 +50,22 @@ export class EmployeeService {
       },
       relations: relation,
     });
-
     if (employeeInfo) {
       return employeeInfo;
+    } else {
+      return {};
     }
-
-    throw new HttpException(
-      'Employee Position not found',
-      HttpStatus.NOT_FOUND,
-    );
   }
 
   async empInfo(id: number) {
-    const emp = await this.getEmpPositionInfo(id, true);
-    const data = await this.employeeTreeRepository.findDescendantsTree(emp);
-    return data?.child;
+    const emp = await this.getEmpPositionInfo(id, false);
+
+    if(emp?.id){
+      const data = await this.employeeTreeRepository.findDescendantsTree(emp);
+      return data?.child;
+    } else {
+      return [];
+    }
+    
   }
 }

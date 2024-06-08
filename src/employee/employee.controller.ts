@@ -12,11 +12,11 @@ import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { UserRoles } from 'src/auth/decorators/role.enum';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { UserRoles } from '../auth/decorators/role.enum';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { Public } from '../auth/decorators/public.decorator';
+import { AuthGuard } from '../auth/auth.guard';
 
 @ApiTags('Employee info')
 @Controller('employee-info')
@@ -25,8 +25,8 @@ export class EmployeeInfoController {
 
   @Public()
   @Get('public/:id')
-  empInfoPublic(@Param('id') id: string) {
-    return this.employeeService.empInfo(+id);
+  async empInfoPublic(@Param('id') id: string) {
+    return await this.employeeService.empInfo(+id);
   }
 
   @UseGuards(AuthGuard)
